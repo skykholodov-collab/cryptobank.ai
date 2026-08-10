@@ -17,6 +17,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -29,6 +31,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
@@ -104,6 +107,8 @@ fun HomePage(navController: NavController, viewModel: BridgeViewModel) {
   var showWalletSheet by remember { mutableStateOf(false) }
   var showHistorySheet by remember { mutableStateOf(false) }
 
+  val focusManager = LocalFocusManager.current
+
   val rate = uiState.liveRate
   val amount = amountText.replace(",", ".").toDoubleOrNull() ?: 0.0
   val result = if (rubToUsdt) amount / rate else amount * rate
@@ -142,11 +147,11 @@ fun HomePage(navController: NavController, viewModel: BridgeViewModel) {
           containerColor = MaterialTheme.colorScheme.background
         ),
         actions = {
-          // Wallet Status Button
+          // Wallet Status Button / TopBar Indicator
           Surface(
             onClick = { showWalletSheet = true },
             shape = RoundedCornerShape(20.dp),
-            color = if (activeWallet != null) Color(0xFFE3F2FD) else Color(0xFFFFEBEE),
+            color = if (activeWallet != null) Color(0xFFE8F5E9) else Color(0xFFFFEBEE),
             modifier = Modifier.padding(end = 8.dp)
           ) {
             Row(
@@ -157,18 +162,25 @@ fun HomePage(navController: NavController, viewModel: BridgeViewModel) {
                 modifier = Modifier
                   .size(8.dp)
                   .background(
-                    if (activeWallet != null) Color(0xFF4CAF50) else Color(0xFFF44336),
+                    if (activeWallet != null) Color(0xFF2E7D32) else Color(0xFFD32F2F),
                     CircleShape
                   )
               )
               Spacer(modifier = Modifier.width(6.dp))
+              Icon(
+                if (activeWallet != null) Icons.Default.AccountBalanceWallet else Icons.Default.LinkOff,
+                contentDescription = null,
+                tint = if (activeWallet != null) Color(0xFF2E7D32) else Color(0xFFD32F2F),
+                modifier = Modifier.size(14.dp)
+              )
+              Spacer(modifier = Modifier.width(4.dp))
               Text(
                 if (activeWallet != null) 
                   "${activeWallet.address.take(4)}...${activeWallet.address.takeLast(4)}" 
-                else "WX Wallet",
+                else "Отключен",
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Bold,
-                color = TextDark
+                color = if (activeWallet != null) Color(0xFF1B5E20) else Color(0xFFC62828)
               )
             }
           }
@@ -202,7 +214,47 @@ fun HomePage(navController: NavController, viewModel: BridgeViewModel) {
         fontSize = 14.sp,
         color = Color.Gray
       )
-      Spacer(modifier = Modifier.height(18.dp))
+      Spacer(modifier = Modifier.height(10.dp))
+
+      // Status Chip Indicator
+      AssistChip(
+        onClick = { showWalletSheet = true },
+        label = {
+          Text(
+            if (activeWallet != null)
+              "WX Кошелек: ${activeWallet.address.take(6)}...${activeWallet.address.takeLast(4)}"
+            else
+              "Кошелек WX Network не подключен",
+            fontWeight = FontWeight.Bold,
+            fontSize = 12.sp,
+            color = if (activeWallet != null) Color(0xFF1B5E20) else Color(0xFFC62828)
+          )
+        },
+        leadingIcon = {
+          Box(
+            modifier = Modifier
+              .size(8.dp)
+              .background(
+                if (activeWallet != null) Color(0xFF4CAF50) else Color(0xFFF44336),
+                CircleShape
+              )
+          )
+        },
+        trailingIcon = {
+          Icon(
+            if (activeWallet != null) Icons.Default.CheckCircle else Icons.Default.Warning,
+            contentDescription = null,
+            tint = if (activeWallet != null) Color(0xFF2E7D32) else Color(0xFFD32F2F),
+            modifier = Modifier.size(16.dp)
+          )
+        },
+        colors = AssistChipDefaults.assistChipColors(
+          containerColor = if (activeWallet != null) Color(0xFFE8F5E9) else Color(0xFFFFEBEE)
+        ),
+        shape = RoundedCornerShape(16.dp)
+      )
+
+      Spacer(modifier = Modifier.height(12.dp))
 
       // WX Network Wallet Status Banner / Connect Wallet Button
       Card(
@@ -364,7 +416,8 @@ fun HomePage(navController: NavController, viewModel: BridgeViewModel) {
           OutlinedTextField(
             value = amountText,
             onValueChange = { amountText = it },
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number, imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
             placeholder = { Text("0.00") },
             trailingIcon = {
               Text(
@@ -609,6 +662,8 @@ fun HomePage(navController: NavController, viewModel: BridgeViewModel) {
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(12.dp),
             singleLine = true,
+            keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+            keyboardActions = KeyboardActions(onDone = { focusManager.clearFocus() }),
             colors = OutlinedTextFieldDefaults.colors(
               focusedContainerColor = MaterialTheme.colorScheme.background,
               unfocusedContainerColor = MaterialTheme.colorScheme.background
