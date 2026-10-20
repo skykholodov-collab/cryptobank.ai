@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#f4f7fa" />
+  <title>RUB BRIDGE — Мост между фиатом и цифровыми активами</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H18a3 3 0 0 1 3 3v9a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V7.5Zm2 0A.5.5 0 0 0 5.5 8H18a1 1 0 0 1 1 1v1H5a1 1 0 0 1-1-1V7.5Zm13 6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3Z"/></symbol>
+    <symbol id="i-history" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 8.94 10.06 1 1 0 0 0-1.99-.23A7 7 0 1 1 12 5c1.9 0 3.62.75 4.9 1.98l-1.79.01a1 1 0 1 0 .01 2l4.15-.03a1 1 0 0 0 .99-1l-.03-4.15a1 1 0 1 0-2 .01l.01 1.5A8.96 8.96 0 0 0 12 3Zm.5 4a1 1 0 0 0-1 1v4.28c0 .4.24.76.61.92l3.1 1.35a1 1 0 0 0 .79-1.84l-2.5-1.08V8a1 1 0 0 0-1-1Z"/></symbol>
+    <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 4a1 1 0 0 1 1 1v12.59l4.3-4.3a1 1 0 1 1 1.4 1.42l-6 6a1 1 0 0 1-1.4 0l-6-6a1 1 0 1 1 1.4-1.42l4.3 4.3V5a1 1 0 0 1 1-1Z"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.34-5.66l-2.3.01a1 1 0 1 0 .02 2l4.15-.02a1 1 0 0 0 1-1L20.5 3.2a1 1 0 1 0-2 .01l.01 1.4A9.96 9.96 0 0 0 12 2a10 10 0 1 0 10 10 1 1 0 1 0-2 0Z"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="M9.6 14.4a1 1 0 0 1 0-1.4l3.2-3.2a1 1 0 0 1 1.4 1.4l-3.2 3.2a1 1 0 0 1-1.4 0Zm-2.8 5.2a4.5 4.5 0 0 1-3.2-7.68l2.6-2.6a1 1 0 0 1 1.42 1.42l-2.6 2.6a2.5 2.5 0 0 0 3.54 3.54l2.6-2.6a1 1 0 1 1 1.42 1.42l-2.6 2.6a4.5 4.5 0 0 1-3.18 1.3Zm10.4-10.4a1 1 0 0 1-1.42-1.42l2.6-2.6a2.5 2.5 0 0 0-3.54-3.54l-2.6 2.6a1 1 0 1 1-1.42-1.42l2.6-2.6a4.5 4.5 0 0 1 6.36 6.36l-2.58 2.62Z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.7 7.7-5.4 5.4a1 1 0 0 1-1.4 0l-2.6-2.6a1 1 0 1 1 1.4-1.42l1.9 1.9 4.7-4.7a1 1 0 0 1 1.4 1.42Z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><path d="M9 2a3 3 0 0 0-3 3v9a3 3 0 0 0 3 3h1v-2H9a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v1h2V5a3 3 0 0 0-3-3H9Zm3 6a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h5a3 3 0 0 0 3-3v-8a3 3 0 0 0-3-3h-5Zm-1 3a1 1 0 0 1 1-1h5a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-8Z"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M11.3 4.3a1 1 0 0 1 0 1.4L5.4 11.6H20a1 1 0 1 1 0 2H5.4l5.9 5.9a1 1 0 0 1-1.4 1.4l-7.6-7.6a1 1 0 0 1 0-1.4l7.6-7.6a1 1 0 0 1 1.4 0Z"/></symbol>
+    <symbol id="i-swap" viewBox="0 0 24 24"><path d="M7.7 3.3a1 1 0 0 1 0 1.4L6.4 6H18a4 4 0 0 1 4 4v1a1 1 0 1 1-2 0v-1a2 2 0 0 0-2-2H6.4l1.3 1.3a1 1 0 1 1-1.4 1.4l-3-3a1 1 0 0 1 0-1.4l3-3a1 1 0 0 1 1.4 0Zm8.6 12.4a1 1 0 0 1 1.4-1.4l3 3a1 1 0 0 1 0 1.4l-3 3a1 1 0 0 1-1.4-1.4l1.3-1.3H6a4 4 0 0 1-4-4v-1a1 1 0 1 1 2 0v1a2 2 0 0 0 2 2h11.6l-1.3-1.3Z"/></symbol>
+    <symbol id="i-bank" viewBox="0 0 24 24"><path d="M12 2 2 7v2h20V7L12 2Zm-8 9v7H2v2h20v-2h-2v-7h-2v7h-2v-7h-2v7h-2v-7H8v7H6v-7H4Z"/></symbol>
+    <symbol id="i-ruble" viewBox="0 0 24 24"><path d="M8 3h5.5a5.5 5.5 0 0 1 0 11H10v2h4v2h-4v3H8v-3H5v-2h3V3Zm2 2v7h3.5a3.5 3.5 0 1 0 0-7H10Z"/></symbol>
+    <symbol id="i-dex" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm6.9 7h-3.1a12.9 12.9 0 0 0-1.2-4.1A8.05 8.05 0 0 1 18.9 9ZM12 4.1c.7 1 1.3 2.6 1.6 4.9h-3.2c.3-2.3.9-3.9 1.6-4.9ZM8.4 4.9A12.9 12.9 0 0 0 7.2 9H4.1a8.05 8.05 0 0 1 4.3-4.1ZM4.1 11h3.4a15.5 15.5 0 0 0 0 2H4.1a8.1 8.1 0 0 1 0-2Zm.7 4h3.1c.3 1.6.7 3 1.2 4.1A8.05 8.05 0 0 1 4.8 15Zm5.6 5c-.7-1-1.3-2.6-1.6-5h6.4c-.3 2.4-.9 4-1.6 5a8.2 8.2 0 0 1-3.2 0Zm3.8-1c.5-1.1.9-2.5 1.2-4h3.1a8.05 8.05 0 0 1-4.3 4Zm1.7-6a15.5 15.5 0 0 0 0-2h3.4a8.1 8.1 0 0 1 0 2h-3.4Z"/></symbol>
+    <symbol id="i-usdt" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm-1.5 4h3v2.1h3v2h-3v1.8c2.8.2 5 1 5 2.2 0 1.3-2.2 2.2-5 2.2s-5-.9-5-2.2c0-1.2 2.2-2 5-2.2V10h-3V8h3V6Zm1.5 8.5c-2.2 0-3.5.4-3.5.6s1.3.6 3.5.6 3.5-.4 3.5-.6-1.3-.6-3.5-.6Z"/></symbol>
+  </svg>
+
+  <div class="ornament ornament-a"></div>
+  <div class="ornament ornament-b"></div>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#exchange" aria-label="RUB BRIDGE">
+        <span class="brand-mark"><svg><use href="#i-swap"></use></svg></span>
+        <span class="brand-text"><strong>RUB BRIDGE</strong><small>WX Network bridge</small></span>
+      </a>
+      <nav class="nav" aria-label="Основная навигация">
+        <a class="active" href="#exchange">Обмен</a>
+        <a href="#how">Как это работает</a>
+        <a href="#network">WX Network</a>
+      </nav>
+      <div class="header-actions">
+        <button class="wallet-chip" id="walletChip" type="button" aria-label="Кошелек WX Network">
+          <span class="dot" id="walletDot"></span>
+          <svg class="chip-icon"><use href="#i-wallet"></use></svg>
+          <span id="walletChipLabel">3P5K...9XyZ</span>
+        </button>
+        <button class="icon-btn" id="historyBtn" type="button" aria-label="История транзакций">
+          <svg><use href="#i-history"></use></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="eyebrow"><span class="pulse"></span> Live · WX Network Matcher</div>
+      <h1 id="hero-title">Мост между фиатом<br />и цифровыми активами</h1>
+      <p class="hero-copy">Прямой обмен через WX Network Smart Contracts. RUB ↔ USDT по курсу децентрализованного мэтчера — без посредников.</p>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-value" id="heroRate">98.34</span>
+          <span class="stat-label">RUB / USDT</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value up" id="heroChange">+0.42%</span>
+          <span class="stat-label">за 24 часа</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">WAVES</span>
+          <span class="stat-label">сеть расчетов</span>
+        </div>
+      </div>
+
+      <div class="bridge-visual" id="network">
+        <div class="bridge-head">
+          <div><strong>RUB BRIDGE</strong><span>Powered by wx.network API</span></div>
+          <span class="bridge-live"><span class="pulse"></span> online</span>
+        </div>
+        <div class="bridge-flow">
+          <div class="flow-node"><span class="flow-icon"><svg><use href="#i-bank"></use></svg></span><span>FIAT</span></div>
+          <svg class="flow-arrow"><use href="#i-swap"></use></svg>
+          <div class="flow-node"><span class="flow-icon"><svg><use href="#i-ruble"></use></svg></span><span>RUB</span></div>
+          <svg class="flow-arrow"><use href="#i-swap"></use></svg>
+          <div class="flow-node"><span class="flow-icon"><svg><use href="#i-dex"></use></svg></span><span>WX DEX</span></div>
+          <svg class="flow-arrow"><use href="#i-swap"></use></svg>
+          <div class="flow-node"><span class="flow-icon"><svg><use href="#i-usdt"></use></svg></span><span>USDT</span></div>
+        </div>
+      </div>
+
+      <div class="how" id="how">
+        <div class="section-heading">
+          <h2>Как это работает</h2>
+          <span>4 шага до зачисления</span>
+        </div>
+        <ol class="steps">
+          <li><span class="step-number">1</span><div><strong>Выберите направление</strong><span>RUB → USDT или USDT → RUB</span></div></li>
+          <li><span class="step-number">2</span><div><strong>Укажите сумму</strong><span>Расчет по курсу WX Network Matcher</span></div></li>
+          <li><span class="step-number">3</span><div><strong>Подтвердите операцию</strong><span>Авторизуйте транзакцию на WX Network</span></div></li>
+          <li><span class="step-number">4</span><div><strong>Получите актив</strong><span>Зачисление USDT / RUB на ваш WX кошелек</span></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="exchange" id="exchange" aria-labelledby="exchange-title">
+      <div class="converter" id="homeView">
+        <div class="converter-head">
+          <div>
+            <h2 id="exchange-title">Обмен</h2>
+            <p>Расчет в реальном времени</p>
+          </div>
+          <span class="status-pill"><span class="pulse"></span> Сеть активна</span>
+        </div>
+
+        <div class="wallet-banner" id="walletBanner">
+          <div class="wallet-badge"><svg><use href="#i-wallet"></use></svg></div>
+          <div class="wallet-meta">
+            <strong id="walletBannerTitle">WX Wallet подключен</strong>
+            <span id="walletBannerSub">3P5Kq2...9XyZ</span>
+          </div>
+          <button class="text-btn" id="walletBannerAction" type="button">Инфо</button>
+        </div>
+
+        <div class="segmented" role="tablist" aria-label="Направление обмена">
+          <button class="segment active" data-direction="rub-usdt" role="tab" aria-selected="true" type="button">RUB → USDT</button>
+          <button class="segment" data-direction="usdt-rub" role="tab" aria-selected="false" type="button">USDT → RUB</button>
+        </div>
+
+        <div class="field-block">
+          <div class="field-label">
+            <span>Вы отправляете</span>
+            <button class="max-btn" id="maxBtn" type="button">Доступно: <b id="available">18 450.00 RUB</b> <span>МАКС</span></button>
+          </div>
+          <div class="amount-field">
+            <input id="amountInput" type="text" inputmode="decimal" autocomplete="off" placeholder="0.00" aria-label="Сумма обмена" />
+            <span class="currency-tag" id="fromCurrency">RUB</span>
+          </div>
+        </div>
+
+        <div class="receive-label"><svg><use href="#i-arrow-down"></use></svg><span>Вы получите</span></div>
+        <div class="receive-value"><span id="resultValue">0.00</span><span id="toCurrency">USDT</span></div>
+
+        <div class="rate-box">
+          <span class="rate-label">Курс WX Network
+            <button class="refresh-btn" id="refreshRate" type="button" aria-label="Обновить курс"><svg><use href="#i-refresh"></use></svg></button>
+          </span>
+          <strong id="rateLabel">1 USDT = 98.34 RUB</strong>
+        </div>
+
+        <div class="slippage-row">
+          <span>Проскальзывание (Slippage):</span>
+          <div class="slip-options" role="group" aria-label="Допустимое проскальзывание">
+            <button class="slip" data-slip="0.1" type="button">0.1%</button>
+            <button class="slip active" data-slip="0.5" type="button">0.5%</button>
+            <button class="slip" data-slip="1" type="button">1.0%</button>
+          </div>
+        </div>
+
+        <button class="primary-btn" id="submitBtn" type="button" disabled>ПРОДОЛЖИТЬ</button>
+        <p class="converter-note">Комиссия сети 0.005 WAVES · ~0.01$</p>
+      </div>
+
+      <div class="converter confirm-view is-hidden" id="confirmView" aria-labelledby="confirm-title">
+        <div class="view-topline">
+          <button class="back-btn" id="backToHome" type="button" aria-label="Назад"><svg><use href="#i-back"></use></svg></button>
+          <span>Подтверждение WX</span>
+          <span class="view-spacer"></span>
+        </div>
+
+        <div class="confirm-card">
+          <div class="confirm-icon"><svg><use href="#i-swap"></use></svg></div>
+          <h2 id="confirm-title"><span id="confirmPair">RUB → USDT</span></h2>
+          <div class="detail-list">
+            <div class="detail-row"><span>Вы отправляете</span><strong id="confirmSend">0.00 RUB</strong></div>
+            <div class="detail-row"><span>Вы получите</span><strong id="confirmReceive">0.00 USDT</strong></div>
+            <div class="detail-row"><span>Отправитель (WX)</span><strong id="confirmSender">3P5Kq2...9XyZ</strong></div>
+            <div class="detail-row"><span>Сеть / DEX</span><strong>WX Network Node</strong></div>
+            <div class="detail-row"><span>Допустимый сдвиг (Slippage)</span><strong id="confirmSlip">0.5%</strong></div>
+            <div class="detail-row"><span>Комиссия сети</span><strong>0.005 WAVES (~0.01$)</strong></div>
+          </div>
+          <button class="primary-btn" id="confirmBtn" type="button">ПОДТВЕРДИТЬ ТРАНЗАКЦИЮ</button>
+        </div>
+      </div>
+
+      <div class="converter success-view is-hidden" id="successView" aria-labelledby="success-title">
+        <div class="success-icon"><svg><use href="#i-check"></use></svg></div>
+        <h2 id="success-title">Успешно!</h2>
+        <p class="success-copy">Транзакция успешно подтверждена WX Network</p>
+        <div class="success-card">
+          <strong>Детали операции:</strong>
+          <div class="detail-row"><span>Обменяли</span><strong id="successExchange">1 000.00 RUB → 10.17 USDT</strong></div>
+          <div class="detail-row"><span>Блокчейн высота</span><strong id="successHeight">#3 842 917</strong></div>
+          <div class="detail-row"><span>Hash ID</span><strong class="hash" id="successHash">8f3a1c...2b9d</strong><button class="copy-btn" id="copyHash" type="button" aria-label="Скопировать хеш"><svg><use href="#i-copy"></use></svg></button></div>
+        </div>
+        <button class="primary-btn" id="backHome" type="button">НА ГЛАВНУЮ</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>RUB BRIDGE · некастодиальный мост</span>
+    <span class="footer-links"><a href="#exchange">Обмен</a><a href="#how">Как это работает</a><a href="#network">WX Network</a></span>
+  </footer>
+
+  <div class="modal-backdrop is-hidden" id="walletModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="walletModalTitle">
+      <div class="modal-head">
+        <h2 id="walletModalTitle">WX Network Wallet</h2>
+        <button class="icon-btn close-modal" type="button" aria-label="Закрыть"><svg><use href="#i-back"></use></svg></button>
+      </div>
+      <div id="walletConnected">
+        <div class="wallet-detail">
+          <span class="muted">Подключенный адрес:</span>
+          <strong class="address">3P5Kq2wR7tN4mB8xL1cV6yH9dF3sJ5aQ2eZ9XyZ</strong>
+          <span class="muted">Балансы WX Network:</span>
+          <div class="balance-row"><span>WAVES</span><strong>12.45 WAVES</strong></div>
+          <div class="balance-row"><span>USDT</span><strong>520.00 USDT</strong></div>
+          <div class="balance-row"><span>RUB</span><strong>18 450.00 RUB</strong></div>
+        </div>
+        <button class="outline-btn danger" id="disconnectBtn" type="button">Отключить кошелек</button>
+      </div>
+      <div id="walletDisconnected" class="is-hidden">
+        <p class="modal-copy">Подключите WX кошелек для прямых транзакций в блокчейне Waves / WX.</p>
+        <label class="modal-label" for="walletAddress">Адрес WX / Waves</label>
+        <input id="walletAddress" class="modal-input" type="text" placeholder="Ввести WX / Waves адрес (3P...)" autocomplete="off" />
+        <button class="primary-btn" id="connectBtn" type="button">АВТОРИЗОВАТЬ WX ACCOUNT</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop is-hidden" id="historyModal">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="historyTitle">
+      <div class="modal-head">
+        <h2 id="historyTitle">История транзакций WX Network</h2>
+        <button class="icon-btn close-modal" type="button" aria-label="Закрыть"><svg><use href="#i-back"></use></svg></button>
+      </div>
+      <div class="empty-state" id="historyEmpty">
+        <span class="empty-icon"><svg><use href="#i-history"></use></svg></span>
+        <p>У вас пока нет проведенных транзакций</p>
+      </div>
+      <div class="history-list is-hidden" id="historyList"></div>
+    </div>
+  </div>
+
+  <div class="toast is-hidden" id="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
